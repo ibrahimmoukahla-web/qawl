@@ -5,10 +5,22 @@ import Login from "@/components/authUI/login";
 import Signup from "@/components/authUI/signup";
 import Radio from "@mui/material/Radio";
 import { useState } from "react";
-
+import { authClient } from "@/lib/auth-client"
+import { useRouter } from "next/navigation";
 export default function Page() {
   const [isLogin, setIsLogin] = useState(false);
+      const router = useRouter()
+  
+    const { 
+        data: session, 
+        isPending, //loading state
+        error, //error object
+        refetch //refetch the session
+    } = authClient.useSession() 
+if (session){
+   return router.push("/dashboard")
 
+}
   return (
     <div
       className="absolute right-12 top-1/2 translate-y-1/8 
