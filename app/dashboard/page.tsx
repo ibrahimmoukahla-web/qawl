@@ -28,10 +28,6 @@ export default function Page() {
   <div className="flex h-[100vh] bg-amber-900 w-full">
       
       <div className="flex flex-3 bg-amber-500">Dashboard</div>
-{/* 
-      <button onClick={handleSignOut}>
-        Sign out
-      </button> */}
     </div>
   );
 }

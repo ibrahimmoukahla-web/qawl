@@ -20,9 +20,9 @@ export default function ButtonSideBar({name, icons ,SideBarIsOpen,href}:{name:st
   return (
 
         
-        <Link href={`dashboard${href}`} className={`flex items-center ${SideBarIsOpen && "justify-center"} gap-2 p-1 px-3 cursor-pointer ${isActive && "bg-purple-800"} rounded-l-3xl  w-full text-xl hover:bg-purple-500 my-2`}>
+        <Link href={`/dashboard${href}`} className={`flex items-center ${!SideBarIsOpen && "justify-center"}  gap-2 p-1 px-3 cursor-pointer ${isActive && "bg-purple-800"} rounded-l-3xl  w-full text-xl hover:bg-purple-500 my-2`}>
           {icons}
-         <span className={`${SideBarIsOpen && "hidden"}`}> {name}</span>
+         <span className={`${!SideBarIsOpen && "hidden"}`}> {name}</span>
         </Link>
    
   )

@@ -12,48 +12,53 @@ datasource db {
   provider = "postgresql"
 }
 
-
 // =======================================================
 // BETTER AUTH
 // =======================================================
 
 model User {
-  id            String    @id
+  id            String   @id
   name          String
-  email         String    @unique
-  emailVerified Boolean   @default(false)
+  email         String   @unique
+  emailVerified Boolean  @default(false)
   image         String?
   createdAt     DateTime
   updatedAt     DateTime
 
   // Better Auth Admin plugin
-  role          String    @default("user")
-  banned        Boolean?  @default(false)
-  banReason     String?
-  banExpires    DateTime?
+  role       String    @default("user")
+  banned     Boolean?  @default(false)
+  banReason  String?
+  banExpires DateTime?
 
+  followers     Follow[]           @relation("UserFollowers")
+  following     Follow[]           @relation("UserFollowing")
+  username      String?            @unique
+  bio           String?
+  coverImage    String?
+  quoteLimit    Int                @default(5)
   // Qawl relations
-  createdQuotes Quote[]             @relation("QuoteCreatedBy")
+  createdQuotes Quote[]            @relation("QuoteCreatedBy")
   favorites     Favorite[]
   interactions  QuoteInteraction[]
 
-  sessions      Session[]
-  accounts      Account[]
+  sessions Session[]
+  accounts Account[]
 
   @@map("user")
 }
 
 model Session {
-  id             String   @id
-  expiresAt      DateTime
-  token          String   @unique
-  createdAt      DateTime
-  updatedAt      DateTime
-  ipAddress      String?
-  userAgent      String?
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
 
-  userId         String
-  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   // Better Auth Admin plugin
   impersonatedBy String?
@@ -63,23 +68,23 @@ model Session {
 }
 
 model Account {
-  id                    String    @id
-  accountId             String
-  providerId            String
-  userId                String
+  id         String @id
+  accountId  String
+  providerId String
+  userId     String
 
-  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   accessToken           String?
   refreshToken          String?
   idToken               String?
   accessTokenExpiresAt  DateTime?
   refreshTokenExpiresAt DateTime?
-  scope                  String?
+  scope                 String?
   password              String?
 
-  createdAt              DateTime
-  updatedAt              DateTime
+  createdAt DateTime
+  updatedAt DateTime
 
   @@index([userId])
   @@map("account")
@@ -102,30 +107,30 @@ model Verification {
 // =======================================================
 
 model Quote {
-  id          String      @id @default(cuid())
+  id String @id @default(cuid())
 
-  text        String
-  imageUrl    String?
+  text     String
+  imageUrl String?
 
   authorId    String?
   categoryId  String?
   createdById String?
 
-  source      String?
-  sourceUrl   String?
+  source    String?
+  sourceUrl String?
 
-  status      QuoteStatus @default(PUBLISHED)
+  status QuoteStatus @default(PUBLISHED)
 
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  author      Author?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
-  category    Category?   @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  author   Author?   @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 
-  createdBy   User?       @relation("QuoteCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  createdBy User? @relation("QuoteCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
 
-  tags        QuoteTag[]
-  favorites   Favorite[]
+  tags         QuoteTag[]
+  favorites    Favorite[]
   interactions QuoteInteraction[]
 
   @@index([authorId])
@@ -135,60 +140,60 @@ model Quote {
 }
 
 model Author {
-  id        String   @id @default(cuid())
+  id String @id @default(cuid())
 
-  name      String
-  slug      String   @unique
-  bio       String?
-  imageUrl  String?
+  name     String
+  slug     String  @unique
+  bio      String?
+  imageUrl String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  quotes    Quote[]
+  quotes Quote[]
 }
 
 model Category {
-  id        String   @id @default(cuid())
+  id String @id @default(cuid())
 
-  name      String
-  slug      String   @unique
+  name String
+  slug String @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  quotes    Quote[]
+  quotes Quote[]
 }
 
 model Tag {
-  id        String   @id @default(cuid())
+  id String @id @default(cuid())
 
-  name      String
-  slug      String   @unique
+  name String
+  slug String @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  quotes    QuoteTag[]
+  quotes QuoteTag[]
 }
 
 model QuoteTag {
   quoteId String
   tagId   String
 
-  quote   Quote @relation(fields: [quoteId], references: [id], onDelete: Cascade)
-  tag     Tag   @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  quote Quote @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  tag   Tag   @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
   @@id([quoteId, tagId])
   @@index([tagId])
 }
 
 model Favorite {
-  userId    String
-  quoteId   String
+  userId  String
+  quoteId String
 
-  user      User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  quote     Quote @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quote Quote @relation(fields: [quoteId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 
@@ -197,16 +202,16 @@ model Favorite {
 }
 
 model QuoteInteraction {
-  id        String            @id @default(cuid())
+  id String @id @default(cuid())
 
-  userId    String?
-  quoteId   String
-  type      InteractionType
+  userId  String?
+  quoteId String
+  type    InteractionType
 
-  createdAt DateTime          @default(now())
+  createdAt DateTime @default(now())
 
-  user      User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  quote     Quote             @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  user  User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quote Quote @relation(fields: [quoteId], references: [id], onDelete: Cascade)
 
   @@index([userId, createdAt])
   @@index([quoteId, type, createdAt])
@@ -222,4 +227,17 @@ enum InteractionType {
   VIEW
   LIKE
   SHARE
+}
+
+model Follow {
+  followerId  String
+  followingId String
+
+  follower  User @relation("UserFollowers", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("UserFollowing", fields: [followingId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@id([followerId, followingId])
+  @@index([followingId])
 }

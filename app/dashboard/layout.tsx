@@ -35,7 +35,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       return (
       <div className="flex h-[100vh] bg-amber-900 w-full">
           <SideBar/>
-          <div className="flex flex-3 bg-amber-500">{children}</div>
+          <div className="flex flex-3 bg-[#070B1C]">{children}</div>
         </div>
       );
 
