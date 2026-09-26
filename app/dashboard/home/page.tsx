@@ -11,6 +11,8 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import CategoryFilter from "./CategoryFilter";
+import Link from "next/link";
+
 export default async function Page({
   searchParams,
 }: {
@@ -52,8 +54,11 @@ export default async function Page({
     },
 
     orderBy: {
-      createdAt: "desc",
+      interactions: {
+        _count: "desc",
+      },
     },
+    take: 30,
 
     include: {
       author: true,
@@ -136,6 +141,59 @@ export default async function Page({
 
     isSaved: quote.favorites.length > 0,
   }));
+  const trendingAuthorGroups = await prisma.quote.groupBy({
+  by: ["authorId"],
+  where: {
+    status: "PUBLISHED",
+    authorId: {
+      not: null,
+    },
+  },
+  _count: {
+    authorId: true,
+  },
+  orderBy: {
+    _count: {
+      authorId: "desc",
+    },
+  },
+  take: 3,
+});
+const authorIds = trendingAuthorGroups
+  .map((item) => item.authorId)
+  .filter((id): id is string => id !== null);
+
+  const authors = await prisma.author.findMany({
+  where: {
+    id: {
+      in: authorIds,
+    },
+  },
+  select: {
+    id: true,
+    name: true,
+    imageUrl: true,
+  },
+});
+const trendingAuthors = authorIds
+  .map((id) => {
+    const author = authors.find(
+      (item) => item.id === id
+    );
+
+    const count = trendingAuthorGroups.find(
+      (item) => item.authorId === id
+    );
+
+    if (!author) return null;
+
+    return {
+      ...author,
+      quoteCount: count?._count.authorId ?? 0,
+    };
+  })
+  .filter(Boolean);
+
   return (
     <div className="w-full h-screen flex flex-col  ">
       {/* ================= top page ================== */}
@@ -168,15 +226,16 @@ export default async function Page({
           <div className="bg-[#111634] border border-[#242b5c] flex-1 rounded-2xl px-2 p-1 flex flex-col gap-1">
             <div className=" flex justify-between">
               <h1 className="font-bold">Explore Categories</h1>
-              <button className="flex gap-1 items-center text-[#8B5CF6] ">
+
+              <Link
+                href="/dashboard/tags"
+                className="flex gap-1 items-center text-[#8B5CF6] "
+              >
                 <span>View all </span>
                 <FaArrowRight />
-              </button>
+              </Link>
             </div>
-      <CategoryFilter
-  categories={categories}
-  activeCategory={category}
-/>
+            <CategoryFilter categories={categories} activeCategory={category} />
           </div>
           {/* ------------------- header ================= */}
           {/* ------------------- body  ================= */}
@@ -246,59 +305,46 @@ export default async function Page({
 
             <div className="flex flex-col gap-3">
               {/* Author */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full overflow-hidden bg-[#8B5CF6]/15 border border-[#8B5CF6]/30">
-                    <img
-                      src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e"
-                      alt="Author"
-                      className="w-full h-full object-cover"
-                    />
+              
+
+              {/* Author */}
+              <div className="flex flex-col gap-3">
+                {trendingAuthors.map((author) => (
+                  <div
+                    key={author.id}
+                    className="flex items-center justify-between"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full overflow-hidden bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 flex items-center justify-center">
+                        {author.imageUrl ? (
+                          <img
+                            src={author.imageUrl}
+                            alt={author.name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <span className="text-[#C084FC] font-semibold">
+                            {author.name.charAt(0)}
+                          </span>
+                        )}
+                      </div>
+
+                      <div>
+                        <p className="text-sm font-semibold">{author.name}</p>
+
+                        <p className="text-xs text-gray-400">
+                          {author.quoteCount} quotes
+                        </p>
+                      </div>
+                    </div>
+
+                    <button className="text-xs text-[#C084FC]">→</button>
                   </div>
-
-                  <div>
-                    <p className="text-sm font-semibold">Albert Einstein</p>
-
-                    <p className="text-xs text-gray-400">24 quotes</p>
-                  </div>
-                </div>
-
-                <button className="text-xs text-[#C084FC]">→</button>
+                ))}
               </div>
 
               {/* Author */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 flex items-center justify-center">
-                    <span className="text-[#C084FC] font-semibold">N</span>
-                  </div>
-
-                  <div>
-                    <p className="text-sm font-semibold">Nietzsche</p>
-
-                    <p className="text-xs text-gray-400">18 quotes</p>
-                  </div>
-                </div>
-
-                <button className="text-xs text-[#C084FC]">→</button>
-              </div>
-
-              {/* Author */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 flex items-center justify-center">
-                    <span className="text-[#C084FC] font-semibold">R</span>
-                  </div>
-
-                  <div>
-                    <p className="text-sm font-semibold">Rumi</p>
-
-                    <p className="text-xs text-gray-400">15 quotes</p>
-                  </div>
-                </div>
-
-                <button className="text-xs text-[#C084FC]">→</button>
-              </div>
+              
             </div>
           </div>
 
