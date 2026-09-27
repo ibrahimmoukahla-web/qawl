@@ -142,57 +142,138 @@ export default async function Page({
     isSaved: quote.favorites.length > 0,
   }));
   const trendingAuthorGroups = await prisma.quote.groupBy({
-  by: ["authorId"],
-  where: {
-    status: "PUBLISHED",
-    authorId: {
-      not: null,
+    by: ["authorId"],
+    where: {
+      status: "PUBLISHED",
+      authorId: {
+        not: null,
+      },
     },
-  },
-  _count: {
-    authorId: true,
-  },
-  orderBy: {
     _count: {
-      authorId: "desc",
+      authorId: true,
     },
-  },
-  take: 3,
-});
-const authorIds = trendingAuthorGroups
-  .map((item) => item.authorId)
-  .filter((id): id is string => id !== null);
+    orderBy: {
+      _count: {
+        authorId: "desc",
+      },
+    },
+    take: 3,
+  });
+  const authorIds = trendingAuthorGroups
+    .map((item) => item.authorId)
+    .filter((id): id is string => id !== null);
 
   const authors = await prisma.author.findMany({
+    where: {
+      id: {
+        in: authorIds,
+      },
+    },
+    select: {
+      id: true,
+      name: true,
+      imageUrl: true,
+    },
+  });
+  const trendingAuthors = authorIds
+    .map((id) => {
+      const author = authors.find((item) => item.id === id);
+
+      const count = trendingAuthorGroups.find((item) => item.authorId === id);
+
+      if (!author) return null;
+
+      return {
+        ...author,
+        quoteCount: count?._count.authorId ?? 0,
+      };
+    })
+    .filter(Boolean);
+
+  const publishedQuotesCount = await prisma.quote.count({
+    where: {
+      status: "PUBLISHED",
+    },
+  });
+
+  let quoteOfTheDay = null;
+
+  if (publishedQuotesCount > 0) {
+    const startDate = new Date("2026-01-01");
+    const today = new Date();
+
+    const diffInDays = Math.floor(
+      (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24),
+    );
+
+    const index = diffInDays % publishedQuotesCount;
+
+    quoteOfTheDay = await prisma.quote.findFirst({
+      where: {
+        status: "PUBLISHED",
+      },
+
+      orderBy: {
+        createdAt: "asc",
+      },
+
+      skip: index,
+
+      include: {
+        author: true,
+      },
+    });
+  }
+
+  const trendingTagGroups = await prisma.quoteTag.groupBy({
+    by: ["tagId"],
+
+    _count: {
+      tagId: true,
+    },
+
+    orderBy: {
+      _count: {
+        tagId: "desc",
+      },
+    },
+
+    take: 6,
+  });
+const tagIds = trendingTagGroups.map((item) => item.tagId);
+
+const tags = await prisma.tag.findMany({
   where: {
     id: {
-      in: authorIds,
+      in: tagIds,
     },
   },
+
   select: {
     id: true,
     name: true,
-    imageUrl: true,
+    slug: true,
   },
 });
-const trendingAuthors = authorIds
+const trendingTags = tagIds
   .map((id) => {
-    const author = authors.find(
-      (item) => item.id === id
+    const tag = tags.find((item) => item.id === id);
+
+    const count = trendingTagGroups.find(
+      (item) => item.tagId === id,
     );
 
-    const count = trendingAuthorGroups.find(
-      (item) => item.authorId === id
-    );
-
-    if (!author) return null;
+    if (!tag) return null;
 
     return {
-      ...author,
-      quoteCount: count?._count.authorId ?? 0,
+      ...tag,
+      quoteCount: count?._count.tagId ?? 0,
     };
   })
   .filter(Boolean);
+
+  // ======================================================================================
+  // [=====================================================================================]
 
   return (
     <div className="w-full h-screen flex flex-col  ">
@@ -277,19 +358,28 @@ const trendingAuthors = authorIds
             </div>
 
             <div className="rounded-xl bg-[#080d2e] border border-[#282e5c] p-4">
-              <p className="text-sm leading-6 text-gray-200 italic">
-                The only way to do great work is to love what you do.
-              </p>
+              {quoteOfTheDay ? (
+                <>
+                  <p className="text-sm leading-6 text-gray-200 italic">
+                    {quoteOfTheDay.text}
+                  </p>
 
-              <div className="mt-4 flex items-center justify-between">
-                <span className="text-sm font-semibold text-[#C084FC]">
-                  Steve Jobs
-                </span>
+                  <div className="mt-4 flex items-center justify-between">
+                    <span className="text-sm font-semibold text-[#C084FC]">
+                      {quoteOfTheDay.author?.name ?? "Unknown"}
+                    </span>
 
-                <button className="text-xs text-gray-400 hover:text-white transition">
-                  View quote
-                </button>
-              </div>
+                    <Link
+                      href={`/dashboard/quotes/${quoteOfTheDay.id}`}
+                      className="text-xs text-gray-400 hover:text-white transition"
+                    >
+                      View quote
+                    </Link>
+                  </div>
+                </>
+              ) : (
+                <p className="text-sm text-gray-400">No quote available.</p>
+              )}
             </div>
           </div>
 
@@ -305,7 +395,6 @@ const trendingAuthors = authorIds
 
             <div className="flex flex-col gap-3">
               {/* Author */}
-              
 
               {/* Author */}
               <div className="flex flex-col gap-3">
@@ -344,7 +433,6 @@ const trendingAuthors = authorIds
               </div>
 
               {/* Author */}
-              
             </div>
           </div>
 
@@ -352,31 +440,17 @@ const trendingAuthors = authorIds
           <div className="rounded-2xl border border-[#282e5c] bg-[#111634] p-4">
             <h2 className="font-bold mb-3">Trending Topics</h2>
 
-            <div className="flex flex-wrap gap-2">
-              <button className="px-3 py-1.5 rounded-full text-xs bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 text-[#C084FC] hover:bg-[#8B5CF6]/25 transition">
-                #life
-              </button>
-
-              <button className="px-3 py-1.5 rounded-full text-xs bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 text-[#C084FC] hover:bg-[#8B5CF6]/25 transition">
-                #love
-              </button>
-
-              <button className="px-3 py-1.5 rounded-full text-xs bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 text-[#C084FC] hover:bg-[#8B5CF6]/25 transition">
-                #wisdom
-              </button>
-
-              <button className="px-3 py-1.5 rounded-full text-xs bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 text-[#C084FC] hover:bg-[#8B5CF6]/25 transition">
-                #motivation
-              </button>
-
-              <button className="px-3 py-1.5 rounded-full text-xs bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 text-[#C084FC] hover:bg-[#8B5CF6]/25 transition">
-                #success
-              </button>
-
-              <button className="px-3 py-1.5 rounded-full text-xs bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 text-[#C084FC] hover:bg-[#8B5CF6]/25 transition">
-                #life-lessons
-              </button>
-            </div>
+           <div className="flex flex-wrap gap-2">
+  {trendingTags.map((tag) => (
+    <Link
+      key={tag.id}
+      href={`/dashboard/tags/${tag.slug}`}
+      className="px-3 py-1.5 rounded-full text-xs bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 text-[#C084FC] hover:bg-[#8B5CF6]/25 transition"
+    >
+      #{tag.name}
+    </Link>
+  ))}
+</div>
           </div>
         </div>
         {/* ------------------- right side ================= */}
