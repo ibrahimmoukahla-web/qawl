@@ -18,9 +18,10 @@ export default async function Page({
 }: {
   searchParams: Promise<{
     category?: string;
+    q?: string;
   }>;
 }) {
-  const { category } = await searchParams;
+  const { category, q } = await searchParams;
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -39,7 +40,7 @@ export default async function Page({
       color: true,
     },
   });
-
+  const search = q?.trim();
   const quotes = await prisma.quote.findMany({
     where: {
       status: "PUBLISHED",
@@ -49,6 +50,27 @@ export default async function Page({
             category: {
               slug: category,
             },
+          }
+        : {}),
+
+      ...(search
+        ? {
+            OR: [
+              {
+                text: {
+                  contains: search,
+                  mode: "insensitive",
+                },
+              },
+              {
+                author: {
+                  name: {
+                    contains: search,
+                    mode: "insensitive",
+                  },
+                },
+              },
+            ],
           }
         : {}),
     },
@@ -240,37 +262,35 @@ export default async function Page({
 
     take: 6,
   });
-const tagIds = trendingTagGroups.map((item) => item.tagId);
+  const tagIds = trendingTagGroups.map((item) => item.tagId);
 
-const tags = await prisma.tag.findMany({
-  where: {
-    id: {
-      in: tagIds,
+  const tags = await prisma.tag.findMany({
+    where: {
+      id: {
+        in: tagIds,
+      },
     },
-  },
 
-  select: {
-    id: true,
-    name: true,
-    slug: true,
-  },
-});
-const trendingTags = tagIds
-  .map((id) => {
-    const tag = tags.find((item) => item.id === id);
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+    },
+  });
+  const trendingTags = tagIds
+    .map((id) => {
+      const tag = tags.find((item) => item.id === id);
 
-    const count = trendingTagGroups.find(
-      (item) => item.tagId === id,
-    );
+      const count = trendingTagGroups.find((item) => item.tagId === id);
 
-    if (!tag) return null;
+      if (!tag) return null;
 
-    return {
-      ...tag,
-      quoteCount: count?._count.tagId ?? 0,
-    };
-  })
-  .filter(Boolean);
+      return {
+        ...tag,
+        quoteCount: count?._count.tagId ?? 0,
+      };
+    })
+    .filter(Boolean);
 
   // ======================================================================================
   // [=====================================================================================]
@@ -279,10 +299,10 @@ const trendingTags = tagIds
     <div className="w-full h-screen flex flex-col  ">
       {/* ================= top page ================== */}
 
-      <div className="bg-blue-900 w-full h-1/3 flex flex-col relative">
-        <div className="w-full h-9 bg-fuchsia-500 ">
+      <div className=" w-full h-1/3 flex flex-col relative">
+        <div className="w-full h-9">
           <div className="flex px-2  relative justify-between">
-            <InputGroupKbd />
+            <InputGroupKbd category={category} defaultValue={q ?? ""} />
             <div>
               <AvatarDropdown />
             </div>
@@ -440,17 +460,17 @@ const trendingTags = tagIds
           <div className="rounded-2xl border border-[#282e5c] bg-[#111634] p-4">
             <h2 className="font-bold mb-3">Trending Topics</h2>
 
-           <div className="flex flex-wrap gap-2">
-  {trendingTags.map((tag) => (
-    <Link
-      key={tag.id}
-      href={`/dashboard/tags/${tag.slug}`}
-      className="px-3 py-1.5 rounded-full text-xs bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 text-[#C084FC] hover:bg-[#8B5CF6]/25 transition"
-    >
-      #{tag.name}
-    </Link>
-  ))}
-</div>
+            <div className="flex flex-wrap gap-2">
+              {trendingTags.map((tag) => (
+                <Link
+                  key={tag.id}
+                  href={`/dashboard/tags/${tag.slug}`}
+                  className="px-3 py-1.5 rounded-full text-xs bg-[#8B5CF6]/15 border border-[#8B5CF6]/30 text-[#C084FC] hover:bg-[#8B5CF6]/25 transition"
+                >
+                  #{tag.name}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
         {/* ------------------- right side ================= */}
