@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { translateQuote } from "@/lib/translation";
 
 type FormState = {
   error?: string;
@@ -209,25 +210,55 @@ export async function createQuoteAction(
     }
 
     // =====================================================
-    // 2. ROLE
+    // 2. GET USER + ROLE + QUOTE LIMIT
     // =====================================================
 
-    const role =
-      (
-        session.user as typeof session.user & {
-          role?: string;
-        }
-      ).role ?? "user";
+    const user =
+      await prisma.user.findUnique({
+        where: {
+          id: session.user.id,
+        },
 
-    // if (role !== "admin") {
-    //   return {
-    //     error:
-    //       "You do not have permission to create quotes.",
-    //   };
-    // }
+        select: {
+          id: true,
+          role: true,
+          quoteLimit: true,
+        },
+      });
+
+    if (!user) {
+      return {
+        error:
+          "User account not found.",
+      };
+    }
 
     // =====================================================
-    // 3. READ FORM DATA
+    // 3. CHECK QUOTE CREATION LIMIT
+    // =====================================================
+
+    if (user.role !== "admin") {
+      const createdQuotes =
+        await prisma.quote.count({
+          where: {
+            createdById:
+              user.id,
+          },
+        });
+
+      if (
+        createdQuotes >=
+        user.quoteLimit
+      ) {
+        return {
+          error:
+            `You have reached your quote limit of ${user.quoteLimit}.`,
+        };
+      }
+    }
+
+    // =====================================================
+    // 4. READ FORM DATA
     // =====================================================
 
     const text =
@@ -279,7 +310,7 @@ export async function createQuoteAction(
     ];
 
     // =====================================================
-    // 4. TEXT VALIDATION
+    // 5. TEXT VALIDATION
     // =====================================================
 
     if (!text) {
@@ -290,7 +321,7 @@ export async function createQuoteAction(
     }
 
     // =====================================================
-    // 5. STATUS VALIDATION
+    // 6. STATUS VALIDATION
     // =====================================================
 
     if (
@@ -303,7 +334,7 @@ export async function createQuoteAction(
     }
 
     // =====================================================
-    // 6. SOURCE URL VALIDATION
+    // 7. SOURCE URL VALIDATION
     // =====================================================
 
     if (sourceUrl) {
@@ -331,10 +362,10 @@ export async function createQuoteAction(
     }
 
     // =====================================================
-    // 7. CHECK CATEGORY
+    // 8. CHECK CATEGORY
     // =====================================================
 
-    let finalCategoryId:
+    const finalCategoryId:
       string | null =
       categoryId || null;
 
@@ -362,10 +393,10 @@ export async function createQuoteAction(
     }
 
     // =====================================================
-    // 8. CHECK AUTHOR
+    // 9. CHECK AUTHOR
     // =====================================================
 
-    let finalAuthorId:
+    const finalAuthorId:
       string | null =
       authorId || null;
 
@@ -393,7 +424,7 @@ export async function createQuoteAction(
     }
 
     // =====================================================
-    // 9. CHECK TAGS
+    // 10. CHECK TAGS
     // =====================================================
 
     if (tagIds.length > 0) {
@@ -422,7 +453,14 @@ export async function createQuoteAction(
     }
 
     // =====================================================
-    // 10. IMAGE
+    // 11. TRANSLATE QUOTE
+    // =====================================================
+
+    const translation =
+      await translateQuote(text);
+
+    // =====================================================
+    // 12. IMAGE
     // =====================================================
 
     let imageUrl:
@@ -439,13 +477,24 @@ export async function createQuoteAction(
     }
 
     // =====================================================
-    // 11. CREATE QUOTE
+    // 13. CREATE QUOTE
     // =====================================================
 
     const quote =
       await prisma.quote.create({
         data: {
+          // Original text
           text,
+
+          // Automatic translations
+          textEn:
+            translation.textEn,
+
+          textAr:
+            translation.textAr,
+
+          sourceLanguage:
+            translation.sourceLanguage,
 
           imageUrl,
 
@@ -473,7 +522,7 @@ export async function createQuoteAction(
       });
 
     // =====================================================
-    // 12. CREATE QUOTE ↔ TAG RELATIONS
+    // 14. CREATE QUOTE ↔ TAG RELATIONS
     // =====================================================
 
     if (tagIds.length > 0) {
@@ -494,7 +543,7 @@ export async function createQuoteAction(
     }
 
     // =====================================================
-    // 13. REFRESH PAGES
+    // 15. REFRESH PAGES
     // =====================================================
 
     revalidatePath(
@@ -506,12 +555,13 @@ export async function createQuoteAction(
     );
 
     // =====================================================
-    // 14. SUCCESS
+    // 16. SUCCESS
     // =====================================================
 
     return {
       success: true,
-      quoteId: quote.id,
+      quoteId:
+        quote.id,
     };
   } catch (error) {
     console.error(

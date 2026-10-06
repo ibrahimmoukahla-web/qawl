@@ -6,6 +6,11 @@ import { signUpSchema } from "@/lib/zod";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/navigation";
+const signIn = async () => {
+  const data = await authClient.signIn.social({
+    provider: "google",
+  });
+};
 export default function Signup() {
   const router = useRouter()
    const [errors, setErrors] = useState<{
@@ -131,11 +136,11 @@ const { error } = await authClient.signUp.email({
               <div className="h-px flex-1 bg-gray-50" />
             </div>
             <form
-              action=" "
+              action={signIn}
               className="flex flex-col items-center  w-full p-2 mx-3 relative "
             >
               <button
-                type="button"
+                type="submit"
                 className="rounded-xl p-1 w-full hover:bg-gray-200 cursor-pointer bg-gray-50 text-black my-2 flex items-center justify-center  gap-2"
               >
                 <FcGoogle size={20} /> Sign in with Google

@@ -46,12 +46,12 @@ export async function createCategoryAction(
         }
       ).role ?? "user";
 
-    // if (role !== "admin") {
-    //   return {
-    //     error:
-    //       "Only admins can create categories.",
-    //   };
-    // }
+    if (role !== "admin") {
+      return {
+        error:
+          "Only admins can create categories.",
+      };
+    }
 
     const name = String(
       formData.get("name") ?? "",

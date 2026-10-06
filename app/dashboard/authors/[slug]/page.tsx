@@ -113,7 +113,7 @@ export default async function AuthorPage({
               },
 
               select: {
-                id: true,
+                 quoteId: true
               },
 
               take: 1,

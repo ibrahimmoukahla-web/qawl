@@ -1,0 +1,318 @@
+{
+  "Metadata": {
+    "title": "Qawl",
+    "description": "Sometimes, we are not looking for new words; we are looking for words that reached the depths of us and said what we could not."
+  },
+
+  "Common": {
+    "english": "English",
+    "arabic": "العربية",
+    "language": "Language",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "back": "Back",
+    "loading": "Loading...",
+    "search": "Search"
+  },
+
+  "Auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "email": "Email address",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "forgotPassword": "Forgot your password?",
+    "emailPlaceholder": "you@example.com",
+    "passwordPlaceholder": "Enter your password"
+  },
+
+  "ForgotPassword": {
+    "title": "Forgot your password?",
+    "description": "Enter your email address and we'll send you a 6-digit verification code.",
+    "email": "Email address",
+    "sendCode": "Send reset code",
+    "sending": "Sending code...",
+    "codeSent": "Code sent",
+    "checkEmail": "Check your email for your 6-digit password reset code.",
+    "enterCode": "Enter verification code",
+    "differentEmail": "Use a different email",
+    "backToLogin": "Back to login",
+    "errorEmptyEmail": "Please enter your email address.",
+    "errorSend": "Unable to send the reset code. Please try again."
+  },
+
+  "ResetPassword": {
+    "title": "Reset your password",
+    "description": "Enter the 6-digit code sent to your email, then create a new password.",
+    "verificationCode": "Verification code",
+    "codePlaceholder": "123456",
+    "codeHint": "Enter the 6-digit code from your email.",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "resetPassword": "Reset password",
+    "updating": "Updating password...",
+    "requestNewCode": "Request a new code",
+    "passwordLength": "Password must contain at least 8 characters.",
+    "passwordMismatch": "Passwords do not match.",
+    "invalidCode": "The verification code is invalid or expired.",
+    "successTitle": "Password changed",
+    "successDescription": "Your password has been successfully changed.",
+    "redirecting": "Redirecting to login..."
+  },
+
+  "Dashboard": {
+    "home": "Home",
+    "quotes": "Quotes",
+    "favorites": "Favorites",
+    "authors": "Authors",
+    "categories": "Categories",
+    "tags": "Tags",
+    "profile": "Profile",
+    "settings": "Settings",
+    "contactUs": "Contact us",
+    "createQuote": "Create quote",
+    "createAuthor": "Create author",
+    "createCategory": "Create category",
+    "createTag": "Create tag"
+  },
+"Sidebar": {
+    "QAWL": "QAWL",
+  "Home": "Home",
+  "Quotes": "Quotes",
+  "Favorites": "Favorites",
+  "Authors": "Authors",
+  "Categories": "Categories",
+  "Tags": "Tags",
+  "Profile": "Profile",
+  "Settings": "Settings",
+  "Sign out": "Sign out"
+},
+"QuoteCard": {
+  "quote": "Quote",
+  "general": "General",
+  "unknownAuthor": "Unknown author",
+  "unknownUser": "Unknown user",
+  "sharedBy": "shared by",
+  "save": "save",
+  "saved": "saved",
+  "share": "Share",
+  "like": "Like",
+  "linkCopied": "Quote link copied!",
+  "justNow": "just now",
+   
+    "minutesAgo": "{count}m",
+    "hoursAgo": "{count}h",
+    "daysAgo": "{count}d",
+    "weeksAgo": "{count}w",
+    "monthsAgo": "{count}mo",
+    "yearsAgo": "{count}y"
+},
+
+  "AuthorsPage": {
+    "title": "Authors",
+    "subtitle": "Discover the voices behind the quotes.",
+    "author": "author",
+    "authors": "authors",
+    "sectionLabel": "People & Ideas",
+    "heading": "Meet the authors.",
+    "description": "Explore writers, philosophers, thinkers, and other voices collected in Qawl.",
+    "searchPlaceholder": "Search authors...",
+    "emptyTitle": "No authors yet",
+    "emptyDescription": "Authors you add to Qawl will appear here.",
+    "createAuthor": "Create Author",
+    "authorBadge": "Author",
+    "quotes": "Quotes",
+    "defaultBio": "Discover the quotes and ideas collected from this author."
+  }
+,
+"QuotesPage": {
+  "title": "Quotes",
+  "subtitle": "Explore words worth keeping.",
+  "libraryLabel": "Quote Library",
+  "introTitle": "Find the words you're looking for.",
+  "introDescription": "Browse meaningful quotes, discover authors, and explore ideas by category and tag.",
+  "showing": "Showing",
+  "of": "of",
+  "noQuotesFound": "No quotes found",
+  "quote": "quote",
+  "quotes": "quotes",
+  "searchPlaceholder": "Search quotes, authors, categories...",
+  "allCategories": "All categories",
+  "newestFirst": "Newest first",
+  "oldestFirst": "Oldest first",
+  "search": "Search",
+  "clear": "Clear",
+  "exploreCategories": "Explore categories",
+  "all": "All",
+  "emptyTitle": "No quotes found",
+  "emptyDescription": "We couldn't find any published quotes matching your current filters.",
+  "viewAll": "View all quotes",
+  "author": "Author",
+  "unknownAuthor": "Unknown author",
+  "source": "Source",
+  "previous": "Previous",
+  "next": "Next"
+},
+  "Home": {
+    "exploreCategories": "Explore Categories",
+    "latestQuotes": "Latest Quotes",
+    "quoteOfTheDay": "Quote of the Day",
+    "trendingAuthors": "Trending Authors",
+    "trendingTopics": "Trending Topics",
+     
+    "contactUs": "Contact us",
+    "viewAll": "View all",
+    "featured": "Featured",
+    "viewQuote": "View quote",
+    "quote": "quote",
+    "quotes": "quotes",
+    "noQuotesFound": "No quotes found.",
+    "unknownAuthor": "Unknown",
+    "noQuoteAvailable": "No quote available.",
+    "noTrendingAuthors": "No trending authors yet.",
+    "noTrendingTopics": "No trending topics yet.",
+    "coverAlt": "Qawl cover"
+  },
+  "FavoritesPage": {
+  "title": "Favorites",
+  "subtitle": "Quotes you saved",
+  "notAuthenticated": "Not authenticated",
+  "emptyTitle": "No favorites yet",
+  "emptyDescription": "Quotes you like will appear here.",
+  "exploreQuotes": "Explore quotes"
+},"TagsPage": {
+  "title": "Tags",
+  "subtitle": "Discover quotes through tags",
+  "emptyTitle": "No tags yet",
+  "emptyDescription": "Create your first tag.",
+  "createTag": "Create Tag",
+  "quote": "quote",
+  "quotes": "quotes"
+},
+"CategoriesPage": {
+  "title": "Categories",
+  "subtitle": "Explore quotes by category",
+  "emptyTitle": "No categories yet",
+  "emptyDescription": "Create your first category.",
+  "createCategory": "Create Category",
+  "quote": "quote",
+  "quotes": "quotes"
+},
+"ProfilePage": {
+  "notAuthenticated": "Not authenticated",
+  "userNotFound": "User not found",
+  "coverAlt": "Profile cover",
+  "anonymousUser": "Anonymous User",
+  "notSet": "Not set",
+  "noBio": "No bio added yet.",
+  "joined": "Joined {date}",
+
+  "stats": {
+    "quotes": "Quotes",
+    "favorites": "Favorites",
+    "tags": "Tags",
+    "followers": "Followers"
+  },
+
+  "personalInfo": {
+    "title": "Personal Information",
+    "subtitle": "Your account details"
+  },
+
+  "fields": {
+    "fullName": "Full name",
+    "email": "Email",
+    "username": "Username",
+    "role": "Role",
+    "bio": "Bio",
+    "memberSince": "Member Since"
+  },
+
+  "actions": {
+    "title": "Profile Actions",
+    "editProfile": "Edit Profile",
+    "myFavorites": "My Favorites",
+    "myQuotes": "My Quotes"
+  },
+
+  "account": {
+    "title": "Account Information",
+    "status": "Account Status",
+    "active": "Active",
+    "role": "Role",
+    "emailVerified": "Email Verified",
+    "verified": "Verified",
+    "notVerified": "Not verified"
+  },
+
+  "quickStats": {
+    "title": "Quick Stats"
+  }
+},"QuotePage": {
+  "backToQuotes": "Back to quotes",
+  "quoteLabel": "Quote",
+  "unknownAuthor": "Unknown author",
+  "source": "Source",
+  "published": "Published {date}",
+  "actions": "Actions",
+  "interactWithQuote": "Interact with this quote",
+  "aboutAuthor": "About the author",
+  "viewAuthor": "View author",
+  "category": "Category",
+  "tags": "Tags",
+  "likes": "Likes",
+  "favorites": "Favorites"
+},
+"SettingsPage": {
+  "back": "Back to profile",
+  "title": "Settings",
+  "subtitle": "Manage your account and security.",
+
+  "intro": {
+    "label": "Account settings",
+    "title": "Manage your account.",
+    "description": "Update your personal information and security settings from one place."
+  },
+
+  "account": {
+    "title": "Account",
+    "description": "Manage your personal information.",
+
+    "editProfile": {
+      "title": "Edit profile",
+      "description": "Change your name, username, bio and profile image."
+    },
+
+    "email": {
+      "title": "Email address",
+      "description": "Your account email is managed by authentication.",
+      "protected": "Protected"
+    }
+  },
+
+  "security": {
+    "title": "Security",
+    "description": "Manage your password and account security.",
+
+    "password": {
+      "title": "Change password",
+      "description": "Update your account password."
+    }
+  },
+
+  "danger": {
+    "title": "Danger zone",
+    "description": "Actions here can permanently affect your account.",
+
+    "delete": {
+      "title": "Delete account",
+      "description": "Permanently delete your account and associated data. This action cannot be undone."
+    }
+  }
+}
+}

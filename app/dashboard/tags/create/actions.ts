@@ -46,11 +46,11 @@ export async function createTagAction(
         }
       ).role ?? "user";
 
-    // if (role !== "admin") {
-    //   return {
-    //     error: "Only admins can create tags.",
-    //   };
-    // }
+    if (role !== "admin") {
+      return {
+        error: "Only admins can create tags.",
+      };
+    }
 
     const name = String(
       formData.get("name") ?? "",

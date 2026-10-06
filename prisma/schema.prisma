@@ -109,8 +109,11 @@ model Verification {
 model Quote {
   id String @id @default(cuid())
 
-  text     String
-  imageUrl String?
+  text           String
+  textEn         String?
+  textAr         String?
+  sourceLanguage String?
+  imageUrl       String?
 
   authorId    String?
   categoryId  String?
@@ -143,8 +146,12 @@ model Author {
   id String @id @default(cuid())
 
   name     String
+  nameEn   String?
+  nameAr   String?
   slug     String  @unique
   bio      String?
+  bioEn    String?
+  bioAr    String?
   imageUrl String?
 
   createdAt DateTime @default(now())
@@ -156,9 +163,11 @@ model Author {
 model Category {
   id String @id @default(cuid())
 
-  name String
-  slug String @unique
-  color String @default("#8B5CF6")
+  name      String
+  nameEn    String?
+  nameAr    String?
+  slug      String   @unique
+  color     String   @default("#8B5CF6")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -169,6 +178,8 @@ model Tag {
   id String @id @default(cuid())
 
   name String
+  nameEn    String?
+  nameAr    String?
   slug String @unique
 
   createdAt DateTime @default(now())

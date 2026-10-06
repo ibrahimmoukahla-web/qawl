@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { cloudinary } from "@/lib/cloudinary";
 
 export type AuthorFormState = {
   error?: string;
@@ -76,10 +77,57 @@ export async function createAuthorAction(
       formData.get("bio") ?? "",
     ).trim();
 
-    const imageUrl = String(
-      formData.get("imageUrl") ?? "",
-    ).trim();
+const image = formData.get("image");
 
+let imageUrl: string | null = null;
+
+if (image instanceof File && image.size > 0) {
+  if (!image.type.startsWith("image/")) {
+    return {
+      error: "The selected file must be an image.",
+    };
+  }
+
+  if (image.size > 5 * 1024 * 1024) {
+    return {
+      error: "Image must be smaller than 5MB.",
+    };
+  }
+
+  const bytes = await image.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+
+  imageUrl = await new Promise<string>(
+    (resolve, reject) => {
+      const uploadStream =
+        cloudinary.uploader.upload_stream(
+          {
+            folder: "qawl/authors",
+            resource_type: "image",
+          },
+          (error, result) => {
+            if (error) {
+              reject(error);
+              return;
+            }
+
+            if (!result?.secure_url) {
+              reject(
+                new Error(
+                  "Cloudinary did not return an image URL.",
+                ),
+              );
+              return;
+            }
+
+            resolve(result.secure_url);
+          },
+        );
+
+      uploadStream.end(buffer);
+    },
+  );
+}
     // ============================================
     // VALIDATION
     // ============================================
@@ -108,7 +156,7 @@ export async function createAuthorAction(
         name,
         slug,
         bio: bio || null,
-        imageUrl: imageUrl || null,
+        imageUrl,
       },
     });
 

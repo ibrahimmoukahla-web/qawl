@@ -2,29 +2,16 @@
 
 import Link from "next/link";
 
-import {
-  ArrowLeft,
-  ImagePlus,
-  UserRound,
-} from "lucide-react";
+import { ArrowLeft, ImagePlus, UserRound } from "lucide-react";
 
-import {
-  useActionState,
-} from "react";
+import { useActionState } from "react";
 
-import {
-  createAuthorAction,
-  type AuthorFormState,
-} from "./actions";
+import { createAuthorAction, type AuthorFormState } from "./actions";
 
 const initialState: AuthorFormState = {};
 
 export default function CreateAuthorPage() {
-  const [
-    state,
-    formAction,
-    pending,
-  ] = useActionState(
+  const [state, formAction, pending] = useActionState(
     createAuthorAction,
     initialState,
   );
@@ -55,13 +42,10 @@ export default function CreateAuthorPage() {
                 Qawl
               </p>
 
-              <h1 className="mt-1 text-2xl font-semibold">
-                Create Author
-              </h1>
+              <h1 className="mt-1 text-2xl font-semibold">Create Author</h1>
 
               <p className="mt-1 text-sm text-gray-600">
-                Add a person whose quotes will appear
-                in Qawl.
+                Add a person whose quotes will appear in Qawl.
               </p>
             </div>
           </div>
@@ -107,8 +91,7 @@ export default function CreateAuthorPage() {
               />
 
               <p className="mt-2 text-xs text-gray-600">
-                Leave empty to generate it
-                automatically.
+                Leave empty to generate it automatically.
               </p>
             </div>
 
@@ -127,25 +110,44 @@ export default function CreateAuthorPage() {
               />
             </div>
 
-            {/* IMAGE URL */}
+            {/* IMAGE */}
 
             <div>
               <label className="mb-2 flex items-center gap-2 text-sm font-medium text-gray-300">
                 <ImagePlus size={16} />
-                Image URL
+                Author image
               </label>
 
               <input
-                type="url"
-                name="imageUrl"
-                placeholder="https://res.cloudinary.com/..."
-                className="w-full rounded-xl border border-[#282e5c] bg-[#080D26] px-4 py-3.5 text-sm text-white outline-none placeholder:text-gray-700 focus:border-[#8B5CF6]/60 focus:ring-2 focus:ring-[#8B5CF6]/10"
+                type="file"
+                name="image"
+                accept="image/png,image/jpeg,image/webp"
+                className="
+      block w-full
+      cursor-pointer
+      rounded-xl
+      border border-[#282e5c]
+      bg-[#080D26]
+      text-sm
+      text-gray-400
+
+      file:mr-4
+      file:cursor-pointer
+      file:rounded-lg
+      file:border-0
+      file:bg-[#8B5CF6]
+      file:px-4
+      file:py-2.5
+      file:text-sm
+      file:font-medium
+      file:text-white
+
+      hover:file:bg-[#7C3AED]
+    "
               />
 
               <p className="mt-2 text-xs text-gray-600">
-                For now you can use the Cloudinary
-                image URL. We can add direct upload
-                later.
+                PNG, JPG or WEBP. Maximum size: 5MB.
               </p>
             </div>
 
@@ -171,9 +173,7 @@ export default function CreateAuthorPage() {
                 disabled={pending}
                 className="w-full rounded-xl bg-[#8B5CF6] px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-[#7C3AED] disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {pending
-                  ? "Creating..."
-                  : "Create Author"}
+                {pending ? "Creating..." : "Create Author"}
               </button>
             </div>
           </div>

@@ -1,0 +1,322 @@
+{
+  "Metadata": {
+    "title": "قول",
+    "description": "أحيانًا، لا نبحث عن كلماتٍ جديدة؛ بل عن كلماتٍ سبقتنا إلى أعماقنا، وقالت ما عجزنا عن قوله."
+  },
+
+  "Common": {
+    "english": "English",
+    "arabic": "العربية",
+    "language": "اللغة",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "create": "إنشاء",
+    "back": "رجوع",
+    "loading": "جارٍ التحميل...",
+    "search": "بحث"
+  },
+
+
+
+  "Auth": {
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة السر",
+    "confirmPassword": "تأكيد كلمة السر",
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "forgotPassword": "نسيت كلمة السر؟",
+    "emailPlaceholder": "you@example.com",
+    "passwordPlaceholder": "أدخل كلمة السر"
+  },
+
+  "ForgotPassword": {
+    "title": "نسيت كلمة السر؟",
+    "description": "أدخل بريدك الإلكتروني وسنرسل لك رمز تحقق مكوّنًا من 6 أرقام.",
+    "email": "البريد الإلكتروني",
+    "sendCode": "إرسال رمز إعادة التعيين",
+    "sending": "جارٍ إرسال الرمز...",
+    "codeSent": "تم إرسال الرمز",
+    "checkEmail": "تحقق من بريدك الإلكتروني للحصول على رمز إعادة تعيين كلمة السر المكوّن من 6 أرقام.",
+    "enterCode": "إدخال رمز التحقق",
+    "differentEmail": "استخدام بريد إلكتروني مختلف",
+    "backToLogin": "العودة إلى تسجيل الدخول",
+    "errorEmptyEmail": "أدخل بريدك الإلكتروني.",
+    "errorSend": "تعذر إرسال رمز إعادة التعيين. حاول مرة أخرى."
+  },
+
+  "ResetPassword": {
+    "title": "إعادة تعيين كلمة السر",
+    "description": "أدخل الرمز المكوّن من 6 أرقام المرسل إلى بريدك الإلكتروني، ثم أنشئ كلمة سر جديدة.",
+    "verificationCode": "رمز التحقق",
+    "codePlaceholder": "123456",
+    "codeHint": "أدخل رمز التحقق المكوّن من 6 أرقام من بريدك الإلكتروني.",
+    "newPassword": "كلمة السر الجديدة",
+    "confirmPassword": "تأكيد كلمة السر",
+    "resetPassword": "إعادة تعيين كلمة السر",
+    "updating": "جارٍ تحديث كلمة السر...",
+    "requestNewCode": "طلب رمز جديد",
+    "passwordLength": "يجب أن تحتوي كلمة السر على 8 أحرف على الأقل.",
+    "passwordMismatch": "كلمتا السر غير متطابقتين.",
+    "invalidCode": "رمز التحقق غير صالح أو منتهي الصلاحية.",
+    "successTitle": "تم تغيير كلمة السر",
+    "successDescription": "تم تغيير كلمة السر الخاصة بك بنجاح.",
+    "redirecting": "جارٍ تحويلك إلى صفحة تسجيل الدخول..."
+  },
+  "QuoteCard": {
+  "quote": "Quote",
+  "general": "General",
+  "unknownAuthor": "Unknown author",
+  "unknownUser": "Unknown user",
+  "sharedBy": "shared by",
+  "save": "save",
+  "saved": "saved",
+  "share": "Share",
+  "like": "Like",
+  "linkCopied": "Quote link copied!",
+  "justNow": "just now",
+  
+   
+    "minutesAgo": "منذ {count} د",
+    "hoursAgo": "منذ {count} س",
+    "daysAgo": "منذ {count} يوم",
+    "weeksAgo": "منذ {count} أسبوع",
+    "monthsAgo": "منذ {count} شهر",
+    "yearsAgo": "منذ {count} سنة"
+},
+  "AuthorsPage": {
+    "title": "المؤلفون",
+    "subtitle": "اكتشف الأصوات التي تقف وراء الاقتباسات.",
+    "author": "مؤلف",
+    "authors": "مؤلفون",
+    "sectionLabel": "أشخاص وأفكار",
+    "heading": "تعرّف على المؤلفين.",
+    "description": "استكشف الكتّاب والفلاسفة والمفكرين وغيرهم من الأصوات الموجودة في قول.",
+    "searchPlaceholder": "ابحث عن المؤلفين...",
+    "emptyTitle": "لا يوجد مؤلفون بعد",
+    "emptyDescription": "سيظهر هنا المؤلفون الذين تضيفهم إلى قول.",
+    "createAuthor": "إنشاء مؤلف",
+    "authorBadge": "مؤلف",
+    "quotes": "اقتباسات",
+    "defaultBio": "اكتشف الاقتباسات والأفكار التي جُمعت من هذا المؤلف."
+  },
+"QuotesPage": {
+  "title": "الاقتباسات",
+  "subtitle": "استكشف الكلمات التي تستحق الاحتفاظ بها.",
+  "libraryLabel": "مكتبة الاقتباسات",
+  "introTitle": "اعثر على الكلمات التي تبحث عنها.",
+  "introDescription": "تصفح الاقتباسات الهادفة، واكتشف المؤلفين، واستكشف الأفكار حسب الفئة والوسم.",
+  "showing": "عرض",
+  "of": "من",
+  "noQuotesFound": "لم يتم العثور على اقتباسات",
+  "quote": "اقتباس",
+  "quotes": "اقتباسات",
+  "searchPlaceholder": "ابحث في الاقتباسات والمؤلفين والفئات...",
+  "allCategories": "جميع الفئات",
+  "newestFirst": "الأحدث أولًا",
+  "oldestFirst": "الأقدم أولًا",
+  "search": "بحث",
+  "clear": "مسح",
+  "exploreCategories": "استكشف الفئات",
+  "all": "الكل",
+  "emptyTitle": "لم يتم العثور على اقتباسات",
+  "emptyDescription": "لم نتمكن من العثور على اقتباسات منشورة تطابق عوامل التصفية الحالية.",
+  "viewAll": "عرض جميع الاقتباسات",
+  "author": "المؤلف",
+  "unknownAuthor": "مؤلف غير معروف",
+  "source": "المصدر",
+  "previous": "السابق",
+  "next": "التالي"
+},
+"Sidebar": {
+
+     "QAWL": "قول",
+  "Home": "الرئيسية",
+  "Quotes": "الاقتباسات",
+  "Favorites": "المفضلة",
+  "Authors": "المؤلفون",
+  "Categories": "الفئات",
+  "Tags": "الوسوم",
+  "Profile": "الملف الشخصي",
+  "Settings": "الإعدادات",
+  "Sign out": "تسجيل الخروج"
+},
+  "Dashboard": {
+    "home": "الرئيسية",
+    "quotes": "الاقتباسات",
+    "favorites": "المفضلة",
+    "authors": "المؤلفون",
+    "categories": "الفئات",
+    "tags": "الوسوم",
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات",
+    "contactUs": "تواصل معنا",
+    "createQuote": "إنشاء اقتباس",
+    "createAuthor": "إنشاء مؤلف",
+    "createCategory": "إنشاء فئة",
+    "createTag": "إنشاء وسم"
+  },
+
+  "Home": {
+    "exploreCategories": "استكشف الفئات",
+    "latestQuotes": "أحدث الاقتباسات",
+    "quoteOfTheDay": "اقتباس اليوم",
+    "trendingAuthors": "المؤلفون الرائجون",
+    "trendingTopics": "المواضيع الرائجة",
+     
+    "contactUs": "تواصل معنا",
+    "viewAll": "عرض الكل",
+    "featured": "مميز",
+    "viewQuote": "عرض الاقتباس",
+    "quote": "اقتباس",
+    "quotes": "اقتباسات",
+    "noQuotesFound": "لم يتم العثور على اقتباسات.",
+    "unknownAuthor": "غير معروف",
+    "noQuoteAvailable": "لا يوجد اقتباس متاح.",
+    "noTrendingAuthors": "لا يوجد مؤلفون رائجون بعد.",
+    "noTrendingTopics": "لا توجد مواضيع رائجة بعد.",
+    "coverAlt": "غلاف قول"
+  },
+  "FavoritesPage": {
+  "title": "المفضلة",
+  "subtitle": "الاقتباسات التي حفظتها",
+  "notAuthenticated": "لم يتم تسجيل الدخول",
+  "emptyTitle": "لا توجد مفضلة بعد",
+  "emptyDescription": "ستظهر هنا الاقتباسات التي تعجبك.",
+  "exploreQuotes": "استكشف الاقتباسات"
+},
+"TagsPage": {
+  "title": "الوسوم",
+  "subtitle": "اكتشف الاقتباسات من خلال الوسوم",
+  "emptyTitle": "لا توجد وسوم بعد",
+  "emptyDescription": "أنشئ أول وسم لك.",
+  "createTag": "إنشاء وسم",
+  "quote": "اقتباس",
+  "quotes": "اقتباسات"
+},
+"CategoriesPage": {
+  "title": "التصنيفات",
+  "subtitle": "استكشف الاقتباسات حسب التصنيف",
+  "emptyTitle": "لا توجد تصنيفات بعد",
+  "emptyDescription": "أنشئ أول تصنيف لك.",
+  "createCategory": "إنشاء تصنيف",
+  "quote": "اقتباس",
+  "quotes": "اقتباسات"
+},
+"ProfilePage": {
+  "notAuthenticated": "لم يتم تسجيل الدخول",
+  "userNotFound": "لم يتم العثور على المستخدم",
+  "coverAlt": "غلاف الملف الشخصي",
+  "anonymousUser": "مستخدم مجهول",
+  "notSet": "غير محدد",
+  "noBio": "لم تتم إضافة نبذة بعد.",
+  "joined": "انضم في {date}",
+
+  "stats": {
+    "quotes": "اقتباسات",
+    "favorites": "المفضلة",
+    "tags": "الوسوم",
+    "followers": "المتابعون"
+  },
+
+  "personalInfo": {
+    "title": "المعلومات الشخصية",
+    "subtitle": "تفاصيل حسابك"
+  },
+
+  "fields": {
+    "fullName": "الاسم الكامل",
+    "email": "البريد الإلكتروني",
+    "username": "اسم المستخدم",
+    "role": "الدور",
+    "bio": "النبذة",
+    "memberSince": "عضو منذ"
+  },
+
+  "actions": {
+    "title": "إجراءات الملف الشخصي",
+    "editProfile": "تعديل الملف الشخصي",
+    "myFavorites": "مفضلتي",
+    "myQuotes": "اقتباساتي"
+  },
+
+  "account": {
+    "title": "معلومات الحساب",
+    "status": "حالة الحساب",
+    "active": "نشط",
+    "role": "الدور",
+    "emailVerified": "البريد الإلكتروني موثّق",
+    "verified": "موثّق",
+    "notVerified": "غير موثّق"
+  },
+
+  "quickStats": {
+    "title": "إحصائيات سريعة"
+  }
+},
+"QuotePage": {
+  "backToQuotes": "العودة إلى الاقتباسات",
+  "quoteLabel": "اقتباس",
+  "unknownAuthor": "مؤلف غير معروف",
+  "source": "المصدر",
+  "published": "نُشر في {date}",
+  "actions": "الإجراءات",
+  "interactWithQuote": "تفاعل مع هذا الاقتباس",
+  "aboutAuthor": "عن المؤلف",
+  "viewAuthor": "عرض المؤلف",
+  "category": "التصنيف",
+  "tags": "الوسوم",
+  "likes": "الإعجابات",
+  "favorites": "المفضلة"
+},
+"SettingsPage": {
+  "back": "العودة إلى الملف الشخصي",
+  "title": "الإعدادات",
+  "subtitle": "إدارة حسابك وأمانه.",
+
+  "intro": {
+    "label": "إعدادات الحساب",
+    "title": "إدارة حسابك.",
+    "description": "حدّث معلوماتك الشخصية وإعدادات الأمان من مكان واحد."
+  },
+
+  "account": {
+    "title": "الحساب",
+    "description": "إدارة معلوماتك الشخصية.",
+
+    "editProfile": {
+      "title": "تعديل الملف الشخصي",
+      "description": "غيّر اسمك واسم المستخدم والنبذة وصورة الملف الشخصي."
+    },
+
+    "email": {
+      "title": "عنوان البريد الإلكتروني",
+      "description": "يتم إدارة بريد حسابك الإلكتروني بواسطة نظام المصادقة.",
+      "protected": "محمي"
+    }
+  },
+
+  "security": {
+    "title": "الأمان",
+    "description": "إدارة كلمة المرور وأمان حسابك.",
+
+    "password": {
+      "title": "تغيير كلمة المرور",
+      "description": "حدّث كلمة مرور حسابك."
+    }
+  },
+
+  "danger": {
+    "title": "منطقة الخطر",
+    "description": "قد تؤثر الإجراءات هنا بشكل دائم على حسابك.",
+
+    "delete": {
+      "title": "حذف الحساب",
+      "description": "حذف حسابك والبيانات المرتبطة به نهائيًا. لا يمكن التراجع عن هذا الإجراء."
+    }
+  }
+}
+}
