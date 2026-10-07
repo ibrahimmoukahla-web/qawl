@@ -8,7 +8,7 @@
     "start": "NODE_OPTIONS=--dns-result-order=ipv4first next start",
     "lint": "eslint",
    "postinstall": "prisma generate",
-"vercel-build": "prisma migrate deploy && next build"
+    "vercel-build": "next build"
   },
   "dependencies": {
     "@better-auth/prisma-adapter": "^1.7.5",
