@@ -15,13 +15,17 @@ export const auth = betterAuth({
     autoSignIn: true,
   },
 
-  baseURL: process.env.BETTER_AUTH_URL,
-
-  trustedOrigins: [
-    "http://localhost:3000",
-    "https://qawl-olive.vercel.app",
+baseURL: {
+  allowedHosts: [
+    "localhost:3000",
+    "*.vercel.app",
   ],
- 
+  protocol:
+    process.env.NODE_ENV === "development"
+      ? "http"
+      : "https",
+  fallback: "https://qawl-olive.vercel.app",
+},
   // =========================================================
   // DATABASE
   // =========================================================
